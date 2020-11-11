@@ -1,11 +1,8 @@
 package com.zipcodewilmington.phonebook;
 
-import java.util.List;
-import java.util.ArrayList;
+import java.util.*;
 //import java.util.HashMap;
-import java.util.Iterator;
-import java.util.LinkedHashMap;
-import java.util.Map;
+
 
 /**
  * Created by leon on 1/23/18.
@@ -16,39 +13,62 @@ public class PhoneBook {
     private final Map<String, List<String>> phonebook;
 
     public PhoneBook(Map<String, List<String>> map) {
-        this.phonebook = null;
+        this.phonebook = map;
     }
 
     public PhoneBook() {
-        this(null);
+        this(new LinkedHashMap<String, List<String>>() {
+        });
     }
 
     public void add(String name, String phoneNumber) {
+        String[] number = {phoneNumber};
+        phonebook.putIfAbsent(name, Arrays.asList(number));
     }
 
     public void addAll(String name, String... phoneNumbers) {
+        phonebook.putIfAbsent(name, Arrays.asList(phoneNumbers));
     }
 
     public void remove(String name) {
+        phonebook.remove(name);
     }
 
     public Boolean hasEntry(String name) {
-        return null;
+        return phonebook.containsKey(name);
+    }
+
+    public Boolean hasEntry(String name, String number){
+        if (phonebook.containsKey(name) && phonebook.get(name).contains(number)){
+            return true;
+        }
+        return false;
     }
 
     public List<String> lookup(String name) {
-        return null;
+        return phonebook.get(name);
     }
 
     public String reverseLookup(String phoneNumber)  {
-        return null;
+        for (String s : phonebook.keySet()){
+            for (String n : phonebook.get(s)){
+                if (n.equals(phoneNumber)){
+                    return s;
+                }
+            }
+        }
+        return "No name associated with that number";
     }
 
     public List<String> getAllContactNames() {
-        return null;
+        ArrayList<String> contactNames = new ArrayList<>();
+        for (String s : phonebook.keySet()){
+            contactNames.add(s);
+        }
+        return contactNames;
     }
 
     public Map<String, List<String>> getMap() {
-        return null;
+        return phonebook;
     }
 }

@@ -21,7 +21,7 @@ public class ConstructorTest {
     @Test
     public void testNonNullaryConstructor() {
         // given
-        Map<String, List<String>> dependency = new HashMap<>();
+        HashMap<String, List<String>> dependency = new HashMap<>();
 
         // when
         PhoneBook phoneBook = new PhoneBook(dependency);
